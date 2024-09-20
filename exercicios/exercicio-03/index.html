@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Picsum Galeria</title>
+    <link rel="shortcut icon" href="../img/icon.svg" type="image/x-icon">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <h1>Picsum Galeria</h1>
+        <p>Ferramenta de busca por imagens aleatórias na API da Picsum.Photos</p>
+    </header>
+
+    <main>
+        <section id="form-section">
+            <div id="mensagem"></div>
+            <form id="form">
+                <div class="input-group">
+                    <label for="largura">Largura</label>
+                    <input type="number" id="largura" name="largura" min="200" max="1920" value="200" autofocus placeholder="200">
+                </div>
+                <div class="input-group">
+                    <label for="altura">Altura</label>
+                    <input type="number" id="altura" name="altura" min="200" max="1080" value="200" autofocus placeholder="200">
+                </div>
+
+                <div class="form-check">
+                    <h4>Quantidade de Imagens</h4>
+                    <div class="radio-group">
+                        <div class="input-radio">
+                            <input type="radio" name="quantidade" id="qt3" value="3" checked>
+                            <label for="qt3">3</label>
+                        </div> 
+
+                        <div class="input-radio">
+                            <input type="radio" name="quantidade" id="qt5" value="5">
+                            <label for="qt5">5</label>
+                        </div> 
+
+                        <div class="input-radio">
+                            <input type="radio" name="quantidade" id="qt10" value="10">
+                            <label for="qt10">10</label>
+                        </div>
+                        
+                        <div class="input-radio">
+                            <input type="radio" name="quantidade" id="qt20" value="20">
+                            <label for="qt20">20</label>
+                       </div> 
+
+                    </div>
+                </div>
+
+                <button type="submit">Buscar</button>
+            </form>
+        </section>
+
+        <section id="resultado"></section>
+    </main>
+    
+    <script src="main.js"></script>
+</body>
+</html>

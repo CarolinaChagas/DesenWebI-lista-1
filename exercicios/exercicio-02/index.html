@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Lista de Tarefas</title>
+        <meta name="description" content="Exercício-02-Lista de Tarefas" />
+        <meta name="author" content="Carolina Chagas" />
+        <link rel="shortcut icon" href="../img/icon.svg" type="image/x-icon">
+        <link rel="stylesheet" href="style.css" />
+        <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    </head>
+    <body>
+        <header>
+            <h1>Lista de Tarefas</h1>
+            <button id="escolherTema"></button>
+        </header>
+
+        <main>
+            <section id="tarefasSection">
+                <input type="text" id="novaTarefa" placeholder="Adicionar Nova Tarefa" aria-label="Nova tarefa" tabindex="0">
+                <button id="adicionarTarefa" aria-label="Adicionar Tarefa" tabindex="0">Adicionar</button>
+                <input type="text" id="filtrarTarefas" placeholder="Filtrar tarefas" aria-label="Filtrar tarefas">
+                <ul id="listaTarefas" role="list"></ul>
+            </section>
+        </main>
+        
+        <script src="main.js"></script>
+    </body>
+</html>

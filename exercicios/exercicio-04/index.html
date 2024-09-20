@@ -1,0 +1,91 @@
+<!-- Crie um sistema web que permita ao usuário tirar uma foto com a câmera do dispositivo 
+    e marcar a localização da foto em um mapa. 
+    O sistema deve exibir uma foto tirada e a localização no mapa. 
+    Além disso, faça:
+Adicione um botão para tirar uma foto. Use uma API navigator.mediaDevices.getUserMedia para acessar a câmera do dispositivo.
+ Caso o dispositivo não tenha câmera, permita que o usuário faça o upload de uma foto.
+Adicione um botão para marcar a localização da foto no mapa. 
+
+Use uma API navigator.geolocation para acessar a localização do dispositivo. 
+Caso o dispositivo não possua GPS, permita que o usuário informe a localização manualmente.
+
+um campo de texto para o Adicionar usuário informar título (obrigatório) e descrição (opcional) da foto.
+
+Armazene a foto e a localização localStoragepara que elas não sejam perdidas ao recarregar a página.
+Crie uma tabela para exibir id, título, descrição, localização e dados da foto. Um botão para visualizar detalhes da foto em um modal ou em outra página. Para a localização, visualize um mapa com a localização marcada.
+Adicione um botão para excluir o registro. Exibir um modal de confirmação antes de excluir uma foto.
+Adicione um botão para editar o registro. Exibir um formulário com os campos preenchidos para que o usuário possa editar o registro.
+(opcional) Adicione um botão para compartilhar fotos e localização em redes sociais. -->
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Foto e Localização</title>
+    <link rel="shortcut icon" href="../img/icon.svg" type="image/x-icon">
+    <link rel="stylesheet" href="style.css">
+    <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY"></script>
+</head>
+<body>
+    <h1>Foto e Localização</h1>
+    <div>
+        <button id="takePhotoBtn">Tirar Foto</button>
+        <button id="saveBtn">Salvar</button>
+        <input type="file" id="uploadPhotoInput" accept="image/*" style="display:none;">
+        <button id="markLocationBtn">Marcar Localização</button>
+        <input type="text" id="title" placeholder="Título" required>
+        <textarea id="description" placeholder="Descrição"></textarea>
+    </div>
+    <div id="photoContainer"></div>
+    <div id="map" style="height: 400px; width: 100%;"></div>
+    <table id="photoTable">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Título</th>
+                <th>Descrição</th>
+                <th>Localização</th>
+                <th>Foto</th>
+                <th>Ações</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+
+    <!-- Modal para visualizar detalhes -->
+    <div id="detailsModal" class="modal">
+        <div class="modal-content">
+            <span class="close" id="closeDetails">&times;</span>
+            <h2>Detalhes da Foto</h2>
+            <p id="detailsTitle"></p>
+            <p id="detailsDescription"></p>
+            <p id="detailsLocation"></p>
+            <img id="detailsImage" alt="Detalhes da Foto" style="width:100%">
+        </div>
+    </div>
+
+    <!-- Modal de confirmação para exclusão -->
+    <div id="confirmDeleteModal" class="modal">
+        <div class="modal-content">
+            <span class="close" id="closeConfirmDelete">&times;</span>
+            <h2>Confirmar Exclusão</h2>
+            <p>Você tem certeza que deseja excluir esta foto?</p>
+            <button id="confirmDeleteBtn">Excluir</button>
+        </div>
+    </div>
+
+    <button id="updatePhotoBtn" style="display:none;">Atualizar</button>
+
+    <button id="cancelDeleteBtn">Cancelar</button>
+
+    <div id="alert" style="display:none; background-color: yellow; padding: 10px;">
+        <span id="alert-message"></span>
+        <button id="close-alert">Fechar</button>
+    </div>
+
+    <script src="main.js"></script>
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&callback=initMap"></script>
+</body>
+</html>
+
