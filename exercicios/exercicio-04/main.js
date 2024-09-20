@@ -6,7 +6,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const titleInput = document.getElementById('title');
     const descriptionInput = document.getElementById('description');
     const photoContainer = document.getElementById('photoContainer');
-    const mapContainer = document.getElementById('mapContainer');
     const photoTableBody = document.querySelector('#photoTable tbody');
     const detailsModal = document.getElementById('detailsModal');
     const detailsImage = document.getElementById('detailsImage');
@@ -15,7 +14,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const detailsLocation = document.getElementById('detailsLocation');
     const confirmDeleteModal = document.getElementById('confirmDeleteModal');
     const confirmDeleteBtn = document.getElementById('confirmDeleteBtn');
-    const cancelDeleteBtn = document.getElementById('cancelDeleteBtn');
     const closeDetails = document.getElementById('closeDetails');
     const closeConfirmDelete = document.getElementById('closeConfirmDelete');
 
@@ -38,6 +36,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 canvas.getContext('2d').drawImage(video, 0, 0);
                 currentPhoto = canvas.toDataURL('image/png');
                 photoContainer.innerHTML = `<img src="${currentPhoto}" alt="Foto">`;
+                photoContainer.style.display = 'flex'; // Mostrar o contêiner da foto
                 stream.getTracks().forEach(track => track.stop());
                 video.remove();
             });
@@ -56,7 +55,6 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // Marcar localização
-    // Marcar localização
     markLocationBtn.addEventListener('click', () => {
         if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition((position) => {
@@ -65,24 +63,21 @@ document.addEventListener('DOMContentLoaded', () => {
                     longitude: position.coords.longitude
                 };
                 displayMap(currentLocation);
-                mapContainer.innerText = `Localização marcada: ${currentLocation.latitude}, ${currentLocation.longitude}`;
             }, () => {
-                alert("Não foi possível obter a localização. Usando localização atual como padrão.");
-                currentLocation = { latitude: -23.5505, longitude: -46.6333 }; // Exemplo: São Paulo
+                alert("Não foi possível obter a localização. Usando localização padrão.");
+                currentLocation = { latitude: -23.5505, longitude: -46.6333 }; // São Paulo
                 displayMap(currentLocation);
-                mapContainer.innerText = `Localização padrão: ${currentLocation.latitude}, ${currentLocation.longitude}`;
             });
         } else {
             alert("Geolocalização não suportada. Usando localização padrão.");
-            currentLocation = { latitude: -23.5505, longitude: -46.6333 }; // Exemplo: São Paulo
+            currentLocation = { latitude: -23.5505, longitude: -46.6333 }; // São Paulo
             displayMap(currentLocation);
-            mapContainer.innerText = `Localização padrão: ${currentLocation.latitude}, ${currentLocation.longitude}`;
         }
     });
 
     // Função para exibir o mapa
     function displayMap(location) {
-        const map = new google.maps.Map(mapContainer, {
+        const map = new google.maps.Map(document.getElementById('map'), {
             center: { lat: location.latitude, lng: location.longitude },
             zoom: 15
         });
@@ -144,9 +139,9 @@ document.addEventListener('DOMContentLoaded', () => {
             <td>${photoData.location.latitude}, ${photoData.location.longitude}</td>
             <td><img src="${photoData.photo}" alt="Foto" width="100"></td>
             <td>
-                <button onclick="viewPhoto(${photoData.id})">Ver</button>
-                <button onclick="editPhoto(${photoData.id})">Editar</button>
-                <button onclick="confirmDelete(${photoData.id})">Excluir</button>
+                <button class="visualizar" onclick="viewPhoto(${photoData.id})">Ver</button>
+                <button class="editar" onclick="editPhoto(${photoData.id})">Editar</button>
+                <button class="excluir" onclick="confirmDelete(${photoData.id})">Excluir</button>
             </td>
         `;
         photoTableBody.appendChild(row);
