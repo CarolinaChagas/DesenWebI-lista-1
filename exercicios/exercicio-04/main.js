@@ -1,7 +1,11 @@
 document.addEventListener('DOMContentLoaded', () => {
     const takePhotoBtn = document.getElementById('takePhotoBtn');
     const uploadPhotoInput = document.getElementById('uploadPhotoInput');
+    const uploadPhotoContainer = document.getElementById('uploadPhotoContainer');
     const markLocationBtn = document.getElementById('markLocationBtn');
+    const manualLocationContainer = document.getElementById('manualLocationContainer');
+    const latitudeInput = document.getElementById('latitudeInput');
+    const longitudeInput = document.getElementById('longitudeInput');
     const saveBtn = document.getElementById('saveBtn');
     const titleInput = document.getElementById('title');
     const descriptionInput = document.getElementById('description');
@@ -14,33 +18,45 @@ document.addEventListener('DOMContentLoaded', () => {
     const detailsLocation = document.getElementById('detailsLocation');
     const confirmDeleteModal = document.getElementById('confirmDeleteModal');
     const confirmDeleteBtn = document.getElementById('confirmDeleteBtn');
+    const cancelDeleteBtn = document.getElementById('cancelDeleteBtn'); // Adicionei esta linha
     const closeDetails = document.getElementById('closeDetails');
-    const closeConfirmDelete = document.getElementById('closeConfirmDelete');
-
     let currentPhoto = null;
     let currentLocation = null;
     let editingPhotoId = null;
+    let map;
 
-    // Acessar a câmera do dispositivo
+    // Ocultar o botão de upload por padrão
+    uploadPhotoInput.style.display = 'none';
+
+    // Tentar acessar a câmera do dispositivo
     if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
-        navigator.mediaDevices.getUserMedia({ video: true }).then(stream => {
-            const video = document.createElement('video');
-            video.srcObject = stream;
-            video.play();
-            document.body.appendChild(video);
+        navigator.mediaDevices.getUserMedia({ video: true })
+            .then(stream => {
+                const video = document.createElement('video');
+                video.srcObject = stream;
+                video.play();
+                photoContainer.appendChild(video);
 
-            takePhotoBtn.addEventListener('click', () => {
-                const canvas = document.createElement('canvas');
-                canvas.width = video.videoWidth;
-                canvas.height = video.videoHeight;
-                canvas.getContext('2d').drawImage(video, 0, 0);
-                currentPhoto = canvas.toDataURL('image/png');
-                photoContainer.innerHTML = `<img src="${currentPhoto}" alt="Foto">`;
-                photoContainer.style.display = 'flex'; // Mostrar o contêiner da foto
-                stream.getTracks().forEach(track => track.stop());
-                video.remove();
+                takePhotoBtn.addEventListener('click', () => {
+                    const canvas = document.createElement('canvas');
+                    canvas.width = video.videoWidth;
+                    canvas.height = video.videoHeight;
+                    canvas.getContext('2d').drawImage(video, 0, 0);
+                    currentPhoto = canvas.toDataURL('image/png');
+                    photoContainer.innerHTML = `<img src="${currentPhoto}" alt="Foto">`;
+                    stream.getTracks().forEach(track => track.stop());
+                    video.remove();
+                });
+            })
+            .catch(() => {
+                alert("Câmera não disponível. O upload de fotos será ativado.");
+                uploadPhotoInput.style.display = 'flex';
             });
-        });
+    } 
+    
+    else {
+        alert("Nenhuma câmera disponível. O upload de fotos será ativado.");
+        uploadPhotoInput.style.display = 'flex';
     }
 
     // Upload de foto
@@ -64,63 +80,82 @@ document.addEventListener('DOMContentLoaded', () => {
                 };
                 displayMap(currentLocation);
             }, () => {
-                alert("Não foi possível obter a localização. Usando localização padrão.");
-                currentLocation = { latitude: -23.5505, longitude: -46.6333 }; // São Paulo
-                displayMap(currentLocation);
+                alert("Não foi possível obter a localização automaticamente.");
+                manualLocationContainer.style.display = 'block';
             });
         } else {
-            alert("Geolocalização não suportada. Usando localização padrão.");
-            currentLocation = { latitude: -23.5505, longitude: -46.6333 }; // São Paulo
-            displayMap(currentLocation);
+            alert("Geolocalização não suportada.");
+            manualLocationContainer.style.display = 'block';
         }
     });
 
     // Função para exibir o mapa
     function displayMap(location) {
-        const map = new google.maps.Map(document.getElementById('map'), {
-            center: { lat: location.latitude, lng: location.longitude },
-            zoom: 15
-        });
-        new google.maps.Marker({
-            position: { lat: location.latitude, lng: location.longitude },
-            map: map
-        });
+        if (map) {
+            map.remove();
+        }
+
+        map = L.map('mapContainer').setView([location.latitude, location.longitude], 15);
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            maxZoom: 19,
+            attribution: '© OpenStreetMap'
+        }).addTo(map);
+
+        L.marker([location.latitude, location.longitude]).addTo(map)
+            .bindPopup('Localização marcada!')
+            .openPopup();
     }
 
-    // Salvar foto e localização
+    // Salvar foto
     saveBtn.addEventListener('click', () => {
-        const title = titleInput.value;
-        const description = descriptionInput.value;
+        const title = titleInput.value.trim();
+        const description = descriptionInput.value.trim();
+
+        if (!currentLocation && manualLocationContainer.style.display === 'block') {
+            const latitude = parseFloat(latitudeInput.value);
+            const longitude = parseFloat(longitudeInput.value);
+
+            if (!isNaN(latitude) && !isNaN(longitude)) {
+                currentLocation = { latitude, longitude };
+            } else {
+                alert('Por favor, insira uma latitude e longitude válidas.');
+                return;
+            }
+        }
 
         if (!title || !currentPhoto || !currentLocation) {
             alert('Por favor, preencha todos os campos obrigatórios e marque a localização.');
             return;
         }
 
-        let photos = JSON.parse(localStorage.getItem('photos')) || [];
+        const photos = JSON.parse(localStorage.getItem('photos')) || [];
+        const photoId = editingPhotoId ? editingPhotoId : Date.now();
+
+        // Adicionando ou editando a foto
+        const photoData = {
+            id: photoId,
+            title,
+            description,
+            location: currentLocation,
+            photo: currentPhoto
+        };
 
         if (editingPhotoId) {
-            const photoData = photos.find(photo => photo.id === editingPhotoId);
-            photoData.title = title;
-            photoData.description = description;
-            photoData.photo = currentPhoto;
-            photoData.location = currentLocation;
-            editingPhotoId = null;
-        } else {
-            const photoData = {
-                id: Date.now(),
-                title,
-                description,
-                location: currentLocation,
-                photo: currentPhoto
-            };
-            photos.push(photoData);
+            const index = photos.findIndex(photo => photo.id === editingPhotoId);
+            if (index !== -1) {
+                photos[index] = photoData; // Atualiza a foto
+            }
+            editingPhotoId = null; // Reseta o ID de edição após salvar
+        } 
+        
+        else {
+            photos.push(photoData); // Cria um novo registro de foto
         }
 
         localStorage.setItem('photos', JSON.stringify(photos));
-        photoTableBody.innerHTML = '';
-        loadPhotos();
-        clearForm();
+        photoTableBody.innerHTML = ''; // Limpa a tabela
+        loadPhotos(); // Carrega as fotos do localStorage
+        clearForm(); // Limpa o formulário
     });
 
     // Carregar fotos salvas
@@ -139,6 +174,9 @@ document.addEventListener('DOMContentLoaded', () => {
             <td>${photoData.location.latitude}, ${photoData.location.longitude}</td>
             <td><img src="${photoData.photo}" alt="Foto" width="100"></td>
             <td>
+                <button class="viewMapBtn" onclick="viewMap(${photoData.location.latitude}, ${photoData.location.longitude})">Ver Mapa</button>
+            </td>
+            <td>
                 <button class="visualizar" onclick="viewPhoto(${photoData.id})">Ver</button>
                 <button class="editar" onclick="editPhoto(${photoData.id})">Editar</button>
                 <button class="excluir" onclick="confirmDelete(${photoData.id})">Excluir</button>
@@ -151,7 +189,11 @@ document.addEventListener('DOMContentLoaded', () => {
     function clearForm() {
         titleInput.value = '';
         descriptionInput.value = '';
+        latitudeInput.value = '';
+        longitudeInput.value = '';
         photoContainer.innerHTML = '';
+        photoContainer.style.display = 'none';
+        manualLocationContainer.style.display = 'none';
         currentPhoto = null;
         currentLocation = null;
     }
@@ -181,7 +223,7 @@ document.addEventListener('DOMContentLoaded', () => {
             deletePhoto(id);
             confirmDeleteModal.style.display = 'none';
         };
-        cancelDeleteBtn.onclick = function () {
+        cancelDeleteBtn.onclick = function () { // Adicionando funcionalidade para cancelar exclusão
             confirmDeleteModal.style.display = 'none';
         };
     };
@@ -204,9 +246,15 @@ document.addEventListener('DOMContentLoaded', () => {
             descriptionInput.value = photoData.description;
             currentPhoto = photoData.photo;
             photoContainer.innerHTML = `<img src="${currentPhoto}" alt="Foto">`;
+            photoContainer.style.display = 'flex';
             currentLocation = photoData.location;
             editingPhotoId = id;
         }
+    };
+
+    // Ver mapa
+    window.viewMap = function (latitude, longitude) {
+        displayMap({ latitude, longitude });
     };
 
     // Carregar fotos salvas ao iniciar a página

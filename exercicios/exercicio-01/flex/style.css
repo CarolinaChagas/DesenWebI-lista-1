@@ -22,7 +22,7 @@ nav {
 }
     
 .logo {
-    margin-left: 10px;
+    margin-left: 30px;
     margin-top: 5px;
     width: 40px;
 }
@@ -91,7 +91,7 @@ footer {
     background-color: rgb(245, 228, 228);
     padding-top: 15px;
     padding-bottom: 15px;
-    color: rgb(56, 58, 58);
+    color:  #343a40;
 }
     
 .btn {
@@ -104,14 +104,17 @@ footer {
     padding: 5px 10px;
 }
     
-.btn-primary {
+.btn-primary, .btn-secondary {
     background-color: #007bff;
     color: #f8f8f8;
+    cursor: pointer;
+}
+    
+.btn-primary {
     font-weight: lighter;
     font-size: 18px;
 }
-    
-.btn-secondary {
-    background-color: #116dcf;
-    color: #f8f8f8;
+
+.ultimo{
+    margin-top: 23px;
 }

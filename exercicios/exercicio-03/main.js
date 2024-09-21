@@ -3,16 +3,13 @@ const form = document.querySelector('form');
 form.addEventListener('submit', handleSubmit);
 
 async function handleSubmit(event){
-    event.preventDefault(); /*para não regarregar a página estaticamente*/
-    // alert('Formulário enviado');
+    event.preventDefault(); 
     if(!validateForm()) return;
 
     const formData = new FormData(event.target);
     const largura = formData.get('largura');
     const altura = formData.get('altura');
     const quantidade = formData.get('quantidade');
-
-    // console.log(largura,altura, quantidade);
 
     const url = `${BASE_URL}/${largura}/${altura}.webp`;
 
@@ -58,7 +55,6 @@ function validateForm() {
     });
 
     if (errors.length) {
-        // alert(errors.join('\n'));
         showMessage(errors.join('<br>'), true);
         return false;
     }

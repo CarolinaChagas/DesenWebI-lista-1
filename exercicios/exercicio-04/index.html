@@ -1,37 +1,47 @@
-<!-- Crie um sistema web que permita ao usuário tirar uma foto com a câmera do dispositivo e marcar a localização da foto em um mapa. 
-O sistema deve exibir uma foto tirada e a localização no mapa. Além disso, faça:
-Adicione um botão para tirar uma foto. Use uma API navigator.mediaDevices.getUserMedia para acessar a câmera do dispositivo.
-Caso o dispositivo não tenha câmera, permita que o usuário faça o upload de uma foto.
-Adicione um botão para marcar a localização da foto no mapa. 
-Use uma API navigator.geolocation para acessar a localização do dispositivo. 
-Caso o dispositivo não possua GPS, permita que o usuário informe a localização manualmente.
-Para a localização, visualize um mapa com a localização marcada.
-Falta a parte da API do Maps funcionar e Colocar o botão de upload para funcionar-->
-
+<!-- Utilizei biblioteca JS Leatfet para a localização do mapa, as demais não estavam funcionando -->
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Foto e Localização</title>
-    <link rel="shortcut icon" href="../img/icon.svg" type="image/x-icon">
+    <title>Sistema Web de Fotos e Localização</title>
     <link rel="stylesheet" href="style.css">
-    <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY"></script>
+    <link rel="shortcut icon" href="../img/icon.svg" type="image/x-icon">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
 </head>
 <body>
-    <h1>Foto e Localização</h1>
-    <div>
-        <button id="takePhotoBtn">Tirar Foto</button>
-        <button id="saveBtn">Salvar</button>
-        <input type="file" id="uploadPhotoInput" accept="image/*" style="display:none;">
-        <button id="markLocationBtn">Marcar Localização</button>
-        <input type="text" id="title" placeholder="Título" required>
-        <textarea id="description" placeholder="Descrição"></textarea>
+    <h1>Sistema Web de Captura de Fotos e Localização</h1>
+    
+    <div class="container">
+        <div id="photoContainer"></div>
+    
+        <div class="infoContainer">
+            <h2>Informações da Foto</h2>
+            <input type="text" id="title" placeholder="Título" required />
+            <input type="text" id="description" placeholder="Descrição" required />
+            
+            <div id="buttonContainer">
+                <button id="takePhotoBtn">Tirar Foto</button>
+                <input type="file" id="uploadPhotoInput" accept="image/*" />
+                <button id="markLocationBtn">Marcar Localização</button>
+                <button id="saveBtn">Salvar Foto</button>
+            </div>
+        </div>
+
+        <div id="manualLocationContainer" style="display: none;">
+            <label for="latitudeInput">Latitude:</label>
+            <input type="text" id="latitudeInput" placeholder="Ex: -23.550520">
+            
+            <label for="longitudeInput">Longitude:</label>
+            <input type="text" id="longitudeInput" placeholder="Ex: -46.633308">
+        </div>
     </div>
 
-    <div id="photoContainer"></div>
-    <div id="map" style="height: 400px; width: 100%;"></div>
-    
+    <!-- Para mostrar o Mapa na tela-->
+    <h3>Localização - Mapa</h3>
+    <div id="mapContainer" style="height: 300px;"></div>
+
+    <h2>Fotos Salvas</h2>
     <table id="photoTable">
         <thead>
             <tr>
@@ -40,6 +50,7 @@ Falta a parte da API do Maps funcionar e Colocar o botão de upload para funcion
                 <th>Descrição</th>
                 <th>Localização</th>
                 <th>Foto</th>
+                <th>Mapa</th>
                 <th>Ações</th>
             </tr>
         </thead>
@@ -69,13 +80,7 @@ Falta a parte da API do Maps funcionar e Colocar o botão de upload para funcion
         </div>
     </div>
 
-    <div id="alert" style="display:none; background-color: yellow; padding: 10px;">
-        <span id="alert-message"></span>
-        <button id="close-alert">Fechar</button>
-    </div>
-
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
     <script src="main.js"></script>
-    <script async defer src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&callback=initMap"></script>
 </body>
 </html>
-

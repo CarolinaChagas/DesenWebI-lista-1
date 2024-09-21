@@ -31,7 +31,7 @@ h1{
     text-align: center;
 }
 
-/* Definições de tema claro e escuro */
+/*tema claro*/
 :root {
     --background-color: #ffffff;
     --text-color: #000000;
@@ -47,6 +47,7 @@ h1{
     --h1-color: #000000;
 }
 
+/*tema escuro*/
 [data-theme="dark"] {
     --background-color: #121212;
     --text-color: #151414;
@@ -62,7 +63,6 @@ h1{
     --h1-color: #ffffff;
 }
 
-/* Estilo da lista de tarefas */
 #tarefasSection {
     max-width: 630px;
     margin: 0 auto;
@@ -131,4 +131,13 @@ button:hover {
 input{
     background-color: var(--input-background);
     color: var(--input-text-color);
+}
+
+#novaTarefa, #filtrarTarefas{
+    border-color:  #000000;
+}
+
+#filtrarTarefas{
+    margin-top: 40px;
+    margin-bottom: 30px;
 }

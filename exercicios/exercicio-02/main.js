@@ -1,4 +1,3 @@
-// Seletores e variáveis
 const listaTarefas = document.getElementById('listaTarefas');
 const novaTarefaInput = document.getElementById('novaTarefa');
 const adicionarTarefaButton = document.getElementById('adicionarTarefa');
@@ -7,7 +6,6 @@ const escolherTemaButton = document.getElementById('escolherTema');
 let tarefas = JSON.parse(localStorage.getItem('tarefas')) || [];
 let temaEscuro = localStorage.getItem('temaEscuro') === 'true';
 
-// Inicializando
 document.addEventListener('DOMContentLoaded', () => {
     // Carregar tema
     if (temaEscuro) document.body.setAttribute('data-theme', 'dark');
@@ -35,7 +33,7 @@ function listarTarefas() {
                 <button class="removerTarefa" aria-label="Remover tarefa">🗑️</button>
             </div>
         `;
-        // Adicionar eventos
+        // Adicionar eventos de tarefa completa e remover
         li.querySelector('.tarefaCompleta').addEventListener('click', () => tarefaCompleta(index));
         li.querySelector('.removerTarefa').addEventListener('click', () => removerTarefa(index));
         listaTarefas.appendChild(li);
@@ -59,13 +57,13 @@ function removerTarefa(index) {
     listarTarefas();
 }
 
-// Marcar como concluída
+// Marcar como concluída tarefa
 function tarefaCompleta(index) {
     tarefas[index].completed = !tarefas[index].completed;
     listarTarefas();
 }
 
-// Filtrar tarefas
+// listarTarefas
 filtrarTarefasInput.addEventListener('input', (e) => {
     const filtrarValor = e.target.value.toLowerCase();
     const filtrarTarefas = tarefas.filter(tarefa => tarefa.name.toLowerCase().includes(filtrarValor));
@@ -84,7 +82,7 @@ filtrarTarefasInput.addEventListener('input', (e) => {
     });
 });
 
-// Alternar tema
+// Alterar tema
 escolherTemaButton.addEventListener('click', () => {
     temaEscuro = !temaEscuro;
     document.body.setAttribute('data-theme', temaEscuro ? 'dark' : 'light');
