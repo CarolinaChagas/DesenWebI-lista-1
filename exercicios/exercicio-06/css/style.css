@@ -1,0 +1,273 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+    padding-top: 80px; 
+    padding-bottom: 60px;
+}
+
+header {
+    background-color: rgb(0, 0, 0);
+    color: #fff;
+    padding: 10px 0;
+    text-align: center;
+    position:fixed;
+    top: 0;
+    width: 100%;
+    height: 70px;
+}
+
+nav{
+    display: flex;
+    justify-content: space-between;
+}
+
+main {
+    padding: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+    margin-top: 40px;
+    margin-bottom: 150px;
+}
+
+h1 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+label {
+    display: block;
+    margin: 10px 0 5px;
+}
+
+input[type="text"],
+input[type="email"],
+select {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+button {
+    padding: 10px 15px;
+    background-color: #28a745;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #218838;
+}
+
+#products {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 20px;
+    margin-bottom: 20px;
+}
+
+.product {
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 15px;
+    text-align: center;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    display: flex; 
+    flex-direction: column; 
+    justify-content: space-between;
+    height: 450px; /* Define uma altura fixa para o card */
+}
+
+.product img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 5px;
+}
+
+.product h2 {
+    font-size: 1.5em;
+    margin: 10px 0;
+}
+
+.product p {
+    margin: 10px 0;
+}
+
+footer {
+    text-align: center;
+    background-color: #000000;
+    color: #fff;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    height: 220px;
+}
+
+nav a.logo img{
+    height: 75px;
+    width: 78px;
+    margin-left: 10px;
+}
+
+nav a.carrinho{
+    margin: 20px 20px;
+}
+
+.busca {
+    display: flex;
+    align-items: center;
+}
+
+input[type="search"] {
+    width: 250px;
+    padding: 10px;
+    margin-right: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    transition: width 0.3s;
+}
+
+.search-icon {
+    cursor: pointer;
+    width: 25px;
+    border-style: solid;
+    border-radius: 4px;
+    border-width: 1px;
+    padding: 3px;
+    border-color: #aaa;
+}
+
+footer div.colunas{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+div.ultima_footer{
+    margin-right: 120px;
+}
+
+div ul.ul_footer{
+    list-style: none;
+    text-align: start;
+}
+
+div ul.ul_footer li{
+    padding-bottom: 5px;
+}
+
+h4.news{
+    text-align: start;
+}
+
+div.filtrar{
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+
+.newsletter-container {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start; 
+    margin-top: 10px; 
+}
+
+.newsletter-container input[type="email"] {
+    width: 100%;
+}
+
+.redes a {
+    text-decoration: none;
+    color: #fff;
+}
+
+.redes img {
+    margin-right: 10px;
+    margin-top: 10px;
+}
+
+h4.endereco{
+    text-align: start;
+    margin-left: 40px;
+}
+
+.close-button {
+    color: #aaa;
+    float: right; 
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close-button:hover,
+.close-button:focus {
+    color: black; 
+    text-decoration: none;
+    cursor: pointer;
+}
+
+#brand-filter, #category-filter {
+    margin-left: 15px;
+}
+
+#category-filter{
+    margin-right: 40px;
+}
+
+select {
+    width: 400px;
+    padding: 8px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px; 
+}
+
+.disponiveis{
+    margin-top: 40px;
+    margin-bottom: 40px;
+}
+
+.finalizar{
+    margin-top: 10px;
+}
+
+h3.total{
+    margin-top: 40px;
+}
+
+.buttons{
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+}
+
+.detalhes{
+    display: block;
+    margin-top: 20px;
+}
+
+@media (max-width: 768px) {
+    nav {
+        display: flex;
+        flex-direction: column;
+    }
+
+    nav a {
+        padding: 10px;
+    }
+
+    input[type="search"] {
+        display: none;
+    }
+    
+    .search-icon {
+        width: 30px;
+        height: 30px;
+    }
+}

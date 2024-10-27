@@ -1,0 +1,81 @@
+[
+    {
+      "id": 1,
+      "name": "Notebook",
+      "description": "Notebook Dell Inspiron 15 3000",
+      "price": 2999.99,
+      "image": "../img/notebook dell.avif",
+      "category": "Notebooks",
+      "brand": "Dell"
+    },
+    
+    {
+      "id": 2,
+      "name": "Mouse Sem Fio",
+      "description": "Mouse ergonômico e sem fio.",
+      "price": 40.00,
+      "image": "../img/mouse.webp",
+      "category": "Periféricos",
+      "brand": "Inova"
+    },
+
+    {
+      "id": 3,
+      "name": "Monitor",
+      "description": "Monitor LG 24' LED Full HD",
+      "price": 899.99,
+      "image": "../img/monitor.webp",
+      "category": "Monitores",
+      "brand": "LG"
+    },
+
+    {
+      "id": 4,
+      "name": "Teclado",
+      "description": "Teclado Mecânico Gamer HyperX Alloy FPS",
+      "price": 299.99,
+      "image": "../img/teclado.jpg",
+      "category": "Periféricos",
+      "brand": "HyperX"
+    },
+
+    {
+      "id": 5,
+      "name": "Notebook",
+      "description": "Notebook Dell Inspiron 15 3000",
+      "price": 2999.99,
+      "image": "../img/notebook dell.avif",
+      "category": "Notebooks",
+      "brand": "Dell"
+    },
+    
+    {
+      "id": 6,
+      "name": "Mouse Sem Fio",
+      "description": "Mouse ergonômico e sem fio.",
+      "price": 40.00,
+      "image": "../img/mouse.webp",
+      "category": "Periféricos",
+      "brand": "Inova"
+    },
+
+    {
+      "id": 7,
+      "name": "Monitor",
+      "description": "Monitor LG 24' LED Full HD",
+      "price": 899.99,
+      "image": "../img/monitor.webp",
+      "category": "Monitores",
+      "brand": "LG"
+    },
+
+    {
+      "id": 8,
+      "name": "Teclado",
+      "description": "Teclado Mecânico Gamer HyperX Alloy FPS",
+      "price": 299.99,
+      "image": "../img/teclado.jpg",
+      "category": "Periféricos",
+      "brand": "HyperX"
+    }
+  ]

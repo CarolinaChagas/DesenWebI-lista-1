@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="../img/c.png" type="image/x-icon">
+    <link rel="stylesheet" href="css/style.css">
+    <title>Carrinho de Compras</title>
+</head>
+<body>
+    <header>
+        <nav aria-label="Menu Principal">
+            <a href="index.html" class="logo">
+                <img src="../img/c.png" alt="Imagem da Logotipo da Loja de Informática">
+            </a>
+
+            <div class="busca">
+                <input type="search" id="search" placeholder="Buscar produtos..." onkeyup="filterProducts()">
+                <img src="../img/busca-removebg-preview.png" alt="Imagem da busca" class="search-icon" onclick="toggleSearch()">
+            </div>
+            
+
+            <a href="cart.html" class="carrinho">
+                <img src="../img/carrinho.png" alt="Imagem de um carrinho de compras">
+            </a>
+        </nav>
+    </header>
+
+    <main>
+        <h1>Carrinho de Compras</h1>
+        <div id="cart">
+            <ul id="cart-items"></ul>
+        </div>
+        <button onclick="window.history.back()">Voltar</button>
+        <button onclick="checkout()" class="finalizar" style="margin: 10px;">Finalizar Compra</button>
+    </main>
+    
+    <footer class="footer">
+        <div class="container">
+            <p>Todos os Direitos Reservados &copy 2024</p>
+            <hr>
+
+            <div class="colunas">
+                <div>
+                    <h4 class="endereco">ENDEREÇO</h4>
+                    <ul class="ul_footer">
+                        <li>Rua Adolfo Groth, 82</li>
+                        <li>Videira - Santa Catarina</li>
+                        <li>CEP: 89560-000</li>
+                        <li>Telefone: (49) 3566-2156</li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4>REDES SOCIAIS</h4>
+                    <p class="redes"><img src="../img/facebook-icon.png" width="23px" alt="Logotipo Facebook"><a href="#">Facebook</a></p>
+                    <p class="redes"><img src="../img/instagram-icon.png" width="23px" alt="Lgotipo Instagram"><a href="#">Instagram</a></p>
+                </div>
+
+                <div class="ultima_footer">
+                    <h4 class="news">NEWSLETTER</h4>
+                    <div class="newsletter-container">
+                        <input type="email" placeholder="Digite seu email para receber promoções" size="35px"/>
+                        <button class="promo">Receber promoções</button>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+    </footer>
+    <script src="js/script.js"></script>
+</body>
+</html>
